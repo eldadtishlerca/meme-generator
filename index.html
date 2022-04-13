@@ -7,7 +7,7 @@
     <title>Meme Generator</title>
     <link rel="stylesheet" href="styles/style.css" />
   </head>
-  <body>
+  <body onload="onInit()">
     <header class="main-header flex space-between align-center">
       <div><img class="logo" src="logo.png" alt="logo" /></div>
       <nav class="main-nav-container">
@@ -20,24 +20,65 @@
     </header>
 
     <main>
-      <section class="flex">
-        <div class="search-container">
-          <input type="search" placeholder="search" />
+      <container class="gallery-container show">
+        <section class="flex">
+          <div class="search-container">
+            <input type="search" placeholder="search" />
+          </div>
+          <div class="categories-container">
+            <span>Funny</span>
+            <span>Baby</span>
+          </div>
+        </section>
+        <gallery class="gallery flex"></gallery>
+      </container>
+
+      <container class="editor-container hidden">
+        <div class="flex">
+          <canvas
+            id="my-canvas"
+            width="500"
+            height="500"
+            style="border: 1px solid #121212"
+          ></canvas>
+
+          <section class="user-settings">
+            <div class="input-wrapper">
+              <input
+                class="input-txt"
+                type="text"
+                placeholder=""
+                onchange="onChangeTxt(this.value)"
+              />
+            </div>
+            <div>
+              <button class="btn-line" onclick="onChangeLine()">UD</button>
+              <button class="btn-rate" onclick="onChangeSize(2)">+</button>
+              <button class="btn-rate" onclick="onChangeSize(-2)">-</button>
+            </div>
+            <div>
+              <label for="fillColor">Fill</label>
+              <input
+                type="color"
+                value="#121212"
+                name="fillColor"
+                onchange="onChangeFill(this.value)"
+              />
+              <label for="strokeColor">Stroke</label>
+              <input
+                type="color"
+                value="#121212"
+                name="strokeColor"
+                onchange="onChangeStroke(this.value)"
+              />
+            </div>
+          </section>
         </div>
-        <div class="categories-container">
-          <span>Funny</span>
-          <span>Baby</span>
-        </div>
-      </section>
-      <gallery class="gallery-container flex">
-        <div class="gallery-item">
-          <img src="img/1.jpg" alt="funny" onclick="onOpenEditor(this)" />
-        </div>
-        <div class="gallery-item">
-          <img src="img/2.jpg" alt="funny" onclick="onOpenEditor(this)" />
-        </div>
-      </gallery>
+      </container>
     </main>
-    <script src="script/main.js"></script>
+    <script src="script/storage-services"></script>
+    <script src="script/util-services.js"></script>
+    <script src="script/main-services.js"></script>
+    <script src="script/main-controller.js"></script>
   </body>
 </html>
