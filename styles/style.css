@@ -1,0 +1,22 @@
+* {
+ display: border-box;
+}
+
+body {
+ margin: 0;
+ padding: 0;
+}
+
+.logo {
+ width: 150px;
+}
+
+.flex {
+ display: flex;
+}
+
+.gallery-item img {
+ width: 250px;
+ height: 250px;
+ cursor: pointer;
+}
