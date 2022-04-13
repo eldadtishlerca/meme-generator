@@ -1,7 +1,5 @@
 'use strict'
 
-var gFirstLine
-
 var gImgs = [
   { id: 1, url: 'img/1.jpg', keywords: ['funny', 'angry'] },
   { id: 2, url: 'img/2.jpg', keywords: ['dogs', 'cute'] },
@@ -19,14 +17,14 @@ var gMeme = {
   selectedLineIdx: 0,
   lines: [
     {
-      img: '1',
+      img: '5',
       id: makeId(),
       txt: 'Enter Text',
       size: 50,
       align: 'center',
       color: 'black',
       outline: 'none',
-      pos: { x: 200, y: 100 },
+      pos: { x: 50, y: 100 },
     },
     {
       img: '2',
@@ -39,14 +37,14 @@ var gMeme = {
       pos: { x: 200, y: 100 },
     },
     {
-      img: '1',
+      img: '5',
       id: makeId(),
-      txt: 'LALA',
+      txt: 'FREE WEEKEND',
       size: 50,
       align: 'center',
       color: 'red',
       outline: 'black',
-      pos: { x: 200, y: 300 },
+      pos: { x: 25, y: 450 },
     },
   ],
 }

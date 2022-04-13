@@ -5,41 +5,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Meme Generator</title>
+    <link rel="stylesheet" href="styles/all.min.css" />
+    <link rel="stylesheet" href="styles/fontawesome.min.css" />
     <link rel="stylesheet" href="styles/style.css" />
   </head>
   <body onload="onInit()">
     <header class="main-header flex space-between align-center">
-      <div><img class="logo" src="logo.png" alt="logo" /></div>
-      <nav class="main-nav-container">
+      <div class="logo-wrapper">
+        <img class="logo" src="logo.png" alt="logo" />
+      </div>
+      <nav class="navbar">
         <ul class="main-nav clean-list flex">
-          <li><a href="index.html">Gallery</a></li>
-          <li><a href="memes.html">Memes</a></li>
-          <li><a href="about.html">About</a></li>
+          <li class="nav-item"><a href="index.html">Gallery</a></li>
+          <li class="nav-item"><a href="memes.html">Memes</a></li>
+          <li class="nav-item"><a href="about.html">About</a></li>
         </ul>
       </nav>
     </header>
 
-    <main>
+    <main class="main-layout">
       <container class="gallery-container show">
-        <section class="flex">
-          <div class="search-container">
-            <input type="search" placeholder="search" />
+        <section class="search-bar flex">
+          <div class="search-wrapper">
+            <input class="search-input" type="search" placeholder="search" />
           </div>
-          <div class="categories-container">
-            <span>Funny</span>
-            <span>Baby</span>
+          <div class="categories-wrapper flex align-center">
+            <span onclick="onFillterCategory(this)" class="category-item">
+              Funny
+            </span>
+            <span onclick="onFillterCategory(this)" class="category-item">
+              Animal
+            </span>
+            <span onclick="onFillterCategory(this)" class="category-item">
+              Men
+            </span>
+            <span onclick="onFillterCategory(this)" class="category-item">
+              Comic
+            </span>
+            <span onclick="onFillterCategory(this)" class="category-item">
+              Women
+            </span>
+            <span onclick="onFillterCategory(this)" class="category-item">
+              Smile
+            </span>
           </div>
         </section>
-        <gallery class="gallery flex"></gallery>
+        <gallery class="gallery grid-container"></gallery>
       </container>
 
       <container class="editor-container hidden">
-        <div class="flex">
+        <div class="flex space-evenly editor-wrapper">
           <canvas
             id="my-canvas"
             width="500"
             height="500"
-            style="border: 1px solid #121212"
+            style="border: 5px solid #353941; border-radius: 2rem"
           ></canvas>
 
           <section class="user-settings">
@@ -51,26 +71,105 @@
                 onchange="onChangeTxt(this.value)"
               />
             </div>
-            <div>
-              <button class="btn-line" onclick="onChangeLine()">UD</button>
-              <button class="btn-rate" onclick="onChangeSize(2)">+</button>
-              <button class="btn-rate" onclick="onChangeSize(-2)">-</button>
+            <div class="btn-group">
+              <button class="btn-line" onclick="onChangeLine()">
+                <i class="fa-solid fa-up-down"></i>
+              </button>
+              <button class="btn-add" onclick="onAddLine()">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+              <button class="btn-delete" onclick="onDeleteLine()">
+                <i class="fa-solid fa-trash"></i>
+              </button>
             </div>
-            <div>
-              <label for="fillColor">Fill</label>
-              <input
-                type="color"
-                value="#121212"
-                name="fillColor"
-                onchange="onChangeFill(this.value)"
-              />
-              <label for="strokeColor">Stroke</label>
-              <input
-                type="color"
-                value="#121212"
-                name="strokeColor"
-                onchange="onChangeStroke(this.value)"
-              />
+            <div class="line-settings">
+              <div class="line-settings-row">
+                <button class="btn-rate" onclick="onChangeSize(2)">
+                  <i class="fa-solid fa-maximize"></i>
+                </button>
+                <button class="btn-rate" onclick="onChangeSize(-2)">
+                  <i class="fa-solid fa-minimize"></i>
+                </button>
+                <button class="btn-left" onclick="onChangeLeft()">
+                  <i class="fa-solid fa-align-left"></i>
+                </button>
+                <button class="btn-center" onclick="onChangeCenter()">
+                  <i class="fa-solid fa-align-center"></i>
+                </button>
+                <button class="btn-right" onclick="onChangeRight()">
+                  <i class="fa-solid fa-align-right"></i>
+                </button>
+              </div>
+              <div class="line-settings-row">
+                <div style="position: relative; display: inline-block">
+                  <button type="button" class="fake-btn">
+                    <i class="fa-solid fa-palette"></i>
+                  </button>
+                  <input
+                    type="color"
+                    value="#121212"
+                    name="fillColor"
+                    onchange="onChangeFill(this.value)"
+                    style="
+                      opacity: 0;
+                      position: absolute;
+                      left: 0;
+                      top: 0;
+                      width: 50px;
+                      height: 50px;
+                      cursor: pointer;
+                    "
+                  />
+                </div>
+                <div style="position: relative; display: inline-block">
+                  <button type="button" class="fake-btn">
+                    <i class="fa-solid fa-border-all"></i>
+                  </button>
+                  <input
+                    type="color"
+                    value="#121212"
+                    name="strokeColor"
+                    onchange="onChangeStroke(this.value)"
+                    style="
+                      opacity: 0;
+                      position: absolute;
+                      left: 0;
+                      top: 0;
+                      width: 50px;
+                      height: 50px;
+                      cursor: pointer;
+                    "
+                  />
+                </div>
+                <div class="font-selector">
+                  <select class="font-select" onchange="onSetFont(this.value)">
+                    <option value="impact">Impact</option>
+                    <option value="rubik">Rubik</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="emoji-wrapper flex align-center justify-center">
+              <i class="fa-solid fa-caret-left" style="font-size: 25px"></i>
+              <span>🤪</span>
+              <span>🤓</span>
+              <span>🥱</span>
+              <span>🐶</span>
+              <i class="fa-solid fa-caret-right" style="font-size: 25px"></i>
+            </div>
+            <div class="meme-btns-wrapper">
+              <!-- <button class="btn-save flex align-center justify-center">
+                <i class="fa-solid fa-cloud add-space-right"></i>
+                Save
+              </button> -->
+              <button class="btn-share flex align-center justify-center">
+                <i class="fa-solid fa-share-nodes add-space-right"></i>
+                Share
+              </button>
+              <button class="btn-download flex align-center justify-center">
+                <i class="fa-solid fa-download add-space-right"></i>
+                Download
+              </button>
             </div>
           </section>
         </div>

@@ -1,0 +1,280 @@
+.logo {
+ width: 150px;
+}
+
+.flex {
+ display: flex;
+}
+
+.flex.space-between {
+ justify-content: space-between;
+}
+
+.flex.align-center {
+ align-items: center;
+}
+.flex.space-evenly{
+ justify-content: space-evenly;
+}
+.flex.justify-center {
+ justify-content: center;
+}
+
+.clean-list {
+ list-style-type: none;
+ margin: 0;
+ padding: 0;
+}
+
+.hidden {
+ display: none;
+}
+
+.show {
+ display: border-box;
+ padding-top: 2rem;
+}
+
+.logo-wrapper {
+ margin-left: 4rem;
+}
+
+.navbar {
+ margin-right: 4rem;
+}
+
+.nav-item {
+ margin-left: 2rem;
+ font-size: 20px;
+}
+
+.search-bar {
+ margin: 2rem;
+ padding-top: 2rem;
+}
+
+.search-input {
+ background-color: var(--clr7);
+ outline: none;
+ border: 1px solid transparent;
+ width: 35rem;
+ height: 3rem;
+ border-radius: 5rem;
+ padding-left: 2rem;
+ font-size: 20px;
+ text-transform: capitalize;
+ color: var(--clr6);
+}
+
+.categories-wrapper {
+ background-color: var(--clr5);
+ margin-left: 1rem;
+ border-radius: 5rem;
+ width: 38rem;
+}
+
+.category-item {
+ cursor: pointer;
+ font-size: 20px;
+ padding: 0 20px;
+}
+
+.category-item:first-child {
+ padding-left: 30px;
+}
+
+.category-item:last-child {
+ padding-right: 30px;
+}
+
+.grid-container {
+ display: grid;
+ margin: 0 5rem;
+ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+ grid-gap: 20px;
+}
+
+.gallery-item {
+ height: 220px;
+}
+
+.gallery-item img {
+ border-radius: 10px;
+ max-height: 200px;
+ max-width: 200px;
+ cursor: pointer;
+ box-shadow: #121212 0px 2px 4px;
+}
+
+.editor-wrapper {
+ margin-top: 3rem;
+}
+
+.user-settings {
+ width: 500px;
+ height: 510px;
+ background-color: #383B42;
+ display: flex;
+ flex-direction: column;
+ align-items:center;
+ border-radius: 2rem
+}
+
+.input-wrapper {
+ margin: 1.5rem 0;
+}
+
+.input-txt {
+ outline: none;
+ border: 1px solid transparent;
+ width: 25rem;
+ height: 3rem;
+ border-radius: 5rem;
+ padding-left: 1rem;
+ font-size: 22px;
+ background-color: #EBEEF3;
+ box-shadow: #BDC6D3 0px 3px 1px;
+}
+
+.btn-group {
+ margin-bottom: 1rem;
+}
+
+.btn-group button,
+.line-settings div button {
+ width: 50px;
+ height: 50px;
+ border-left: 0;
+ border-right: 0;
+ border-radius: 5px;
+ cursor: pointer;
+}
+
+.btn-group button i {
+ font-size: 32px;
+ color: white;
+}
+
+.btn-line {
+ margin-right: 15px;
+ background-color: #33AAC9;
+ border-top: 3px solid #53C0D7;
+ border-bottom: 3px solid #048B97;
+}
+
+.btn-add {
+ background-color: #3AC14F;
+ border-top: 3px solid #60D475;
+ border-bottom: 3px solid #015D33;
+}
+
+.btn-delete {
+ margin-left: 15px;
+ background-color: #D92D37;
+ border-top: 3px solid #EE675B;
+ border-bottom: 3px solid #8D0606;
+}
+
+.line-settings {
+ background-color: #19A59F;
+ width: 25rem;
+ border-radius: 10px;
+ display: flex;
+ flex-direction: column;
+}
+
+.line-settings div button {
+ border-top: none;
+ border-bottom: 4px solid #3E7C79;
+}
+
+.line-settings-row:first-child {
+ margin-top: 15px;
+ display: flex;
+ justify-content: space-evenly;
+}
+
+.line-settings-row:last-child {
+ margin-top: 15px;
+ margin-bottom: 15px;
+ display: flex;
+ justify-content: space-evenly;
+}
+
+.font-selector {
+ width: 200px;
+}
+
+.font-select {
+ background-color: rgb(239, 239, 239);
+ width: 100%;
+ height: 50px;
+ border-top: none;
+ border-left: none;
+ border-right: none;
+ border-bottom: 4px solid #3E7C79;
+ padding-left: 15px;
+ font-size: 25px;
+ text-transform: uppercase;
+ font-weight:bold;
+ letter-spacing: 0.5px;
+ cursor: pointer;
+}
+
+.font-select:focus {
+ outline: none;
+}
+
+.emoji-wrapper {
+ margin-top: 20px;
+ width: 25rem;
+ height: 5rem;
+ background-color: white;
+ border-radius: 45px;
+}
+
+.emoji-wrapper span {
+ font-size: 50px;
+ padding: 0 10px;
+ padding-bottom: 5px;
+}
+
+.meme-btns-wrapper {
+ margin-top: 10px;
+ width: 25rem;
+ height: 5rem;
+ display: flex;
+ align-items: center;
+ justify-content: space-around;
+}
+
+.meme-btns-wrapper button {
+ border-left: none;
+ border-right: none;
+ cursor: pointer;
+ height: 80%;
+ width: 47%;
+ font-size: 20px;
+ border-radius: 15px;
+ color: white;
+}
+
+.meme-btns-wrapper i {
+ color: white;
+}
+
+.add-space-right {
+ padding-right: 20px;
+}
+
+.btn-share {
+ background-color:#1E7CD3;
+ border-top: 3px solid #53B1E7;
+ border-bottom: 3px solid #165C9C;
+}
+
+.btn-download {
+ background-color:#8F44BB;
+ border-top: 3px solid #BF84DA;
+ border-bottom: 3px solid #632687;
+}
