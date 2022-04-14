@@ -36,25 +36,37 @@
             <span onclick="onFillterCategory(this)" class="category-item">
               Animal
             </span>
-            <span onclick="onFillterCategory(this)" class="category-item">
+            <span
+              onclick="onFillterCategory(this)"
+              class="category-item mobile-none"
+            >
               Men
             </span>
-            <span onclick="onFillterCategory(this)" class="category-item">
+            <span
+              onclick="onFillterCategory(this)"
+              class="category-item medium-none"
+            >
               Comic
             </span>
-            <span onclick="onFillterCategory(this)" class="category-item">
+            <span
+              onclick="onFillterCategory(this)"
+              class="category-item medium-none"
+            >
               Women
             </span>
             <span onclick="onFillterCategory(this)" class="category-item">
               Smile
             </span>
           </div>
+          <div class="more-wrapper">
+            <button class="btn-more">More</button>
+          </div>
         </section>
         <gallery class="gallery grid-container"></gallery>
       </container>
 
       <container class="editor-container hidden">
-        <div class="flex space-evenly editor-wrapper">
+        <div class="flex editor-wrapper">
           <canvas
             id="my-canvas"
             width="500"
@@ -154,7 +166,7 @@
               <span>🤪</span>
               <span>🤓</span>
               <span>🥱</span>
-              <span>🐶</span>
+              <span class="mobile-none">🐶</span>
               <i class="fa-solid fa-caret-right" style="font-size: 25px"></i>
             </div>
             <div class="meme-btns-wrapper">
@@ -175,7 +187,7 @@
         </div>
       </container>
     </main>
-    <script src="script/storage-services"></script>
+    <!-- <script src="script/storage-services.js"></script> -->
     <script src="script/util-services.js"></script>
     <script src="script/main-services.js"></script>
     <script src="script/main-controller.js"></script>
