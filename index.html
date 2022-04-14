@@ -62,7 +62,13 @@
             <button class="btn-more">More</button>
           </div>
         </section>
-        <gallery class="gallery grid-container"></gallery>
+        <gallery class="gallery grid-container">
+          <div class="gallery-item">
+            <button class="btn-random" onclick="onCreateRandom()">
+              Im Flexible
+            </button>
+          </div>
+        </gallery>
       </container>
 
       <container class="editor-container hidden">
@@ -80,7 +86,8 @@
                 class="input-txt"
                 type="text"
                 placeholder=""
-                onchange="onChangeTxt(this.value)"
+                id=""
+                onchange="onChangeTxt(this.value, this.id)"
               />
             </div>
             <div class="btn-group">
@@ -170,18 +177,21 @@
               <i class="fa-solid fa-caret-right" style="font-size: 25px"></i>
             </div>
             <div class="meme-btns-wrapper">
-              <!-- <button class="btn-save flex align-center justify-center">
-                <i class="fa-solid fa-cloud add-space-right"></i>
-                Save
-              </button> -->
               <button class="btn-share flex align-center justify-center">
                 <i class="fa-solid fa-share-nodes add-space-right"></i>
                 Share
               </button>
-              <button class="btn-download flex align-center justify-center">
+              <button
+                class="btn-save flex align-center justify-center"
+                onclick="onSaveMeme()"
+              >
+                <i class="fa-solid fa-cloud add-space-right"></i>
+                Save
+              </button>
+              <!-- <button class="btn-download flex align-center justify-center">
                 <i class="fa-solid fa-download add-space-right"></i>
                 Download
-              </button>
+              </button> -->
             </div>
           </section>
         </div>

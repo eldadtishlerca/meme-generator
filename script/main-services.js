@@ -15,38 +15,7 @@ var gImgs = [
 var gMeme = {
   selectedImgId: 1,
   selectedLineIdx: 0,
-  lines: [
-    {
-      img: '5',
-      id: makeId(),
-      txt: 'Enter Text',
-      size: 50,
-      align: 'center',
-      color: 'black',
-      outline: 'none',
-      pos: { x: 50, y: 100 },
-    },
-    {
-      img: '2',
-      id: makeId(),
-      txt: 'Enter Text',
-      size: 50,
-      align: 'center',
-      color: 'black',
-      outline: 'none',
-      pos: { x: 200, y: 100 },
-    },
-    {
-      img: '5',
-      id: makeId(),
-      txt: 'FREE WEEKEND',
-      size: 50,
-      align: 'center',
-      color: 'red',
-      outline: 'black',
-      pos: { x: 25, y: 450 },
-    },
-  ],
+  lines: [],
 }
 
 function getImg(imgIdx) {
@@ -58,6 +27,56 @@ function getText(imgIdx) {
   const lines = gMeme.lines
   var memeTxt = lines.filter((line) => imgIdx === line.img)
   return memeTxt
+}
+
+function createFirstLine(val) {
+  const line = {
+    img: val,
+    id: makeId(),
+    txt: 'Enter your Text',
+    size: 50,
+    align: 'center',
+    color: 'white',
+    outline: 'black',
+    pos: { x: 50, y: 100 },
+  }
+  gMeme.lines.unshift(line)
+  return line
+}
+
+function createLine() {
+  const idx = gMeme.selectedImgId
+  const line = {
+    img: idx,
+    id: makeId(),
+    txt: 'Enter your Text',
+    size: 50,
+    align: 'center',
+    color: 'white',
+    outline: 'black',
+    pos: { x: 50, y: 400 },
+  }
+  gMeme.lines.unshift(line)
+  return line
+}
+
+function deleteLine(val) {
+  gMeme.lines.splice(val, 1)
+}
+
+function createRandomLine(val) {
+  const line = {
+    img: val.toString(),
+    id: makeId(),
+    txt: getRandomText(15),
+    size: getRandomNum(14, 50),
+    align: 'center',
+    color: getRandomColor().toString(),
+    outline: getRandomColor().toString(),
+    pos: { x: getRandomNum(30, 200), y: getRandomNum(1, 400) },
+  }
+  gMeme.lines.unshift(line)
+  return line
 }
 
 function setLineTxt(val) {
