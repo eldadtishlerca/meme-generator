@@ -2,3 +2,8 @@
  font-family: impact;
  src: url(/fonts/impact/impact.ttf);
 }
+
+@font-face {
+ font-family: rubik;
+ src: url(/fonts/rubik/Rubik-Regular.ttf);
+}

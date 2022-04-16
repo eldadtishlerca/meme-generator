@@ -8,6 +8,9 @@ var isRandomText = false
 var isLineChange = false
 var gStartPos
 var gLineCenter
+const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
+var toSave = false
+var checkID
 
 var gFontSizeFunny = 20
 var gPaddingFunny = 20
@@ -28,6 +31,8 @@ function onInit() {
 
   addListeners()
   renderGallery()
+  loadSavedMemes()
+  loadSavedMemesImgs()
 }
 
 function addListeners() {
@@ -94,9 +99,12 @@ function onClickImg(val) {
   var elGallery = document.querySelector('.gallery-container')
   elGallery.classList.add('hidden')
   elGallery.classList.remove('show')
-  var elModal = document.querySelector('.editor-container')
-  elModal.classList.remove('hidden')
-  elModal.classList.add('show')
+  var elEditor = document.querySelector('.editor-container')
+  elEditor.classList.remove('hidden')
+  elEditor.classList.add('show')
+  var elMemes = document.querySelector('.memes-container')
+  elMemes.classList.remove('show')
+  elMemes.classList.add('hidden')
   var elMain = document.querySelector('.main-layout')
   elMain.style.backgroundColor = '#21242C'
   memeController(imgIdx)
@@ -107,20 +115,17 @@ function memeController(val) {
   renderMeme()
 }
 
-function loadImage(val, onImageReady) {
+function drawImage() {
+  const url = getImg()
   var img = new Image()
-  img.src = val
-  img.onload = onImageReady.bind(null, img)
-}
-
-function renderImg(img) {
-  gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+  img.src = url
+  img.onload = () => {
+    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+  }
 }
 
 function renderMeme() {
-  const idx = gMeme.selectedImgId
-  const img = getImg(idx)
-  loadImage(img, renderImg)
+  drawImage()
   if (isFirstRender) {
     if (isRandomText) {
       var oneOrTwo = getRandomNum(1, 2)
@@ -163,10 +168,10 @@ function renderMeme() {
         line.pos.y,
         line.font
       )
-      renderSelectBox()
     }
     isFirstRender = false
     renderInput()
+    renderSelectBox()
   } else {
     if (gMeme.lines.length === 0) {
       renderInput()
@@ -206,14 +211,17 @@ function renderTxt(txtArr) {
 }
 
 function drawText(txt, fill, stroke, size, x, y, font) {
+  gCtx.restore()
   gCtx.font = `${size}px ${font}`
   gCtx.fillStyle = fill
   gCtx.strokeStyle = stroke
-  gCtx.lineWidth = 0.5
+  gCtx.lineWidth = 2
+  gCtx.setLineDash([0])
   gCtx.textAlign = 'left'
   gCtx.textBaseline = 'top'
   gCtx.fillText(txt, x, y)
   gCtx.strokeText(txt, x, y)
+  gCtx.save()
 }
 
 function renderInput() {
@@ -361,12 +369,18 @@ function onCreateRandom() {
   onClickImg(idx)
 }
 
-// function onSaveMeme() {
-// var newCanvas = document.querySelector('#my-canvas')
-// var dataURL = newCanvas.toDataURL()
-// saveCanvas(dataURL)
-// saveMeme()
-// }
+function onSaveMeme() {
+  gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
+  drawImage()
+  setTimeout(renderTxt, 5, gMeme.lines)
+  setTimeout(waitSave, 50, gMeme.lines)
+}
+
+function waitSave() {
+  const data = gElCanvas.toDataURL()
+  saveMeme(data)
+  openMemesPage()
+}
 
 function onSetFilter(val) {
   const str = capitalizeFirstLetter(val)
@@ -397,24 +411,58 @@ function drawEmoji(val, x, y) {
   renderMeme()
 }
 
+function onLeftPage() {
+  const elCenterPageEmojis = document.querySelectorAll('.center-page')
+  const centerPageArr = Array.from(elCenterPageEmojis)
+  centerPageArr.forEach((item) => item.classList.remove('show-emoji'))
+  centerPageArr.forEach((item) => item.classList.add('hidden'))
+  const elLeftPageEmojis = document.querySelectorAll('.left-page')
+  const leftPageArr = Array.from(elLeftPageEmojis)
+  leftPageArr.forEach((item) => item.classList.remove('hidden'))
+  leftPageArr.forEach((item) => item.classList.add('show-emoji'))
+  const elLeftBtn = document.querySelector('.to-left-page')
+  elLeftBtn.classList.add('hidden')
+  elLeftBtn.classList.remove('show-emoji')
+  const elRightBtn = document.querySelector('.to-right-page')
+  elRightBtn.classList.add('show-emoji')
+  elRightBtn.classList.remove('hidden')
+}
+
+function onRightPage() {
+  const elCenterPageEmojis = document.querySelectorAll('.center-page')
+  const centerPageArr = Array.from(elCenterPageEmojis)
+  centerPageArr.forEach((item) => item.classList.add('show-emoji'))
+  centerPageArr.forEach((item) => item.classList.remove('hidden'))
+  const elLeftPageEmojis = document.querySelectorAll('.left-page')
+  const leftPageArr = Array.from(elLeftPageEmojis)
+  leftPageArr.forEach((item) => item.classList.add('hidden'))
+  leftPageArr.forEach((item) => item.classList.remove('show-emoji'))
+  const elLeftBtn = document.querySelector('.to-left-page')
+  elLeftBtn.classList.remove('hidden')
+  elLeftBtn.classList.add('show-emoji')
+  const elRightBtn = document.querySelector('.to-right-page')
+  elRightBtn.classList.remove('show-emoji')
+  elRightBtn.classList.add('hidden')
+}
+
 function getEvPos(ev) {
   var pos = {
     x: ev.offsetX,
     y: ev.offsetY,
   }
-  // if (gTouchEvs.includes(ev.type)) {
-  //   ev.preventDefault()
-  //   ev = ev.changedTouches[0]
-  //   pos = {
-  //     x: ev.pageX - ev.target.offsetLeft,
-  //     y: ev.pageY - ev.target.offsetTop,
-  //   }
-  // }
+  if (gTouchEvs.includes(ev.type)) {
+    ev.preventDefault()
+    ev = ev.changedTouches[0]
+    pos = {
+      x: ev.pageX - ev.target.offsetLeft,
+      y: ev.pageY - ev.target.offsetTop,
+    }
+  }
   return pos
 }
 
 function drawRect(txt, size, x, y, font) {
-  gCtx.beginPath()
+  // gCtx.beginPath()
   gCtx.font = `${size}px ${font}`
   gCtx.strokeStyle = 'gray'
   gCtx.lineWidth = 2
@@ -430,4 +478,55 @@ function drawRect(txt, size, x, y, font) {
     sizeX: textWidth / 2,
     sizeY: lineHeight / 2,
   }
+}
+
+function showMemesGallery() {
+  var elGallery = document.querySelector('.gallery-container')
+  elGallery.classList.add('hidden')
+  elGallery.classList.remove('show')
+  var elEditor = document.querySelector('.editor-container')
+  elEditor.classList.remove('show')
+  elEditor.classList.add('hidden')
+  var elMemes = document.querySelector('.memes-container')
+  elMemes.classList.remove('hidden')
+  elMemes.classList.add('show')
+  renderMemesImgs()
+}
+
+function openMemesPage() {
+  var elModal = document.querySelector('.editor-container')
+  elModal.classList.remove('show')
+  elModal.classList.add('hidden')
+  var elMemes = document.querySelector('.memes-container')
+  elMemes.classList.remove('hidden')
+  elMemes.classList.add('show')
+  var elMain = document.querySelector('.main-layout')
+  elMain.style.backgroundColor = '#373943'
+  renderMemesImgs()
+}
+
+function renderMemesImgs() {
+  checkID = 0
+  const images = gSavedImgs
+  var strHtmls = images.map(
+    (src) =>
+      `<div class="gallery-item">
+          <img
+            src=${src}
+            onclick="openMemeEditor(this.id)"
+            id=${checkID++}
+          />
+      </div>`
+  )
+  document.querySelector('.memes-gallery').innerHTML = strHtmls.join('')
+}
+
+function openMemeEditor(val) {
+  gMeme = gSavedMemes[val]
+  onClickImg(gMeme.selectedImgId)
+}
+
+function onSetFont(val) {
+  setFont(val)
+  renderMeme()
 }

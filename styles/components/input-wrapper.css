@@ -1,0 +1,15 @@
+.input-wrapper {
+ margin: 1.5rem 0;
+}
+
+.input-txt {
+ outline: none;
+ border: 1px solid transparent;
+ width: 25rem;
+ height: 3rem;
+ border-radius: 5rem;
+ padding-left: 1rem;
+ font-size: 22px;
+ background-color: #EBEEF3;
+ box-shadow: #BDC6D3 0px 3px 1px;
+}

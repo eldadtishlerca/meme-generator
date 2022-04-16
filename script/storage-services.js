@@ -16,3 +16,7 @@ function deleteLocalStorage() {
 function saveMemesToStorage() {
   saveToStorage('memesDB', gSavedMemes)
 }
+
+function saveImgsToStorage() {
+  saveToStorage('memesImgDB', gSavedImgs)
+}

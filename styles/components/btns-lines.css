@@ -1,0 +1,50 @@
+.btns-lines {
+ margin-bottom: 1rem;
+}
+
+.btns-lines button {
+ width: 50px;
+ height: 50px;
+ border-left: 0;
+ border-right: 0;
+ border-radius: 5px;
+ cursor: pointer;
+ transition: all 0.3s ease-in-out;
+}
+
+.btns-lines button i {
+ font-size: 32px;
+ color: white;
+}
+
+.btn-pick {
+ margin-right: 15px;
+ background-color: #33AAC9;
+ border-top: 3px solid #53C0D7;
+ border-bottom: 3px solid #048B97;
+}
+
+.btn-pick:hover {
+ background-color: #53C0D7;
+}
+
+.btn-add {
+ background-color: #3AC14F;
+ border-top: 3px solid #60D475;
+ border-bottom: 3px solid #015D33;
+}
+
+.btn-add:hover {
+ background-color: #60D475;
+}
+
+.btn-delete {
+ margin-left: 15px;
+ background-color: #D92D37;
+ border-top: 3px solid #EE675B;
+ border-bottom: 3px solid #8D0606;
+}
+
+.btn-delete:hover {
+ background-color: #EE675B;
+}

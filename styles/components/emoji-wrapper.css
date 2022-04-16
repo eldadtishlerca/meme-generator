@@ -1,0 +1,17 @@
+.emoji-wrapper {
+ margin-top: 20px;
+ width: 25rem;
+ height: 5rem;
+ background-color: white;
+ border-radius: 45px;
+}
+
+.emoji-wrapper > * {
+ cursor: pointer;
+}
+
+.emoji-wrapper span {
+ font-size: 50px;
+ margin: 0 10px;
+ margin-bottom: 5px;
+}

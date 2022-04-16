@@ -1,0 +1,37 @@
+.line-settings {
+ background-color: #19A59F;
+ width: 25rem;
+ border-radius: 10px;
+ display: flex;
+ flex-direction: column;
+}
+
+.line-settings div button {
+ border-top: none;
+ border-bottom: 4px solid #3E7C79;
+ color: #efefef;
+ width: 50px;
+ height: 50px;
+ border-left: 0;
+ border-right: 0;
+ border-radius: 5px;
+ cursor: pointer;
+ transition: all 0.2s ease-in-out;
+}
+
+.line-settings-row:first-child {
+ margin-top: 15px;
+ display: flex;
+ justify-content: space-evenly;
+}
+
+.line-settings-row:last-child {
+ margin-top: 15px;
+ margin-bottom: 15px;
+ display: flex;
+ justify-content: space-evenly;
+}
+
+.line-settings div button:hover {
+ background-color: gray;
+}

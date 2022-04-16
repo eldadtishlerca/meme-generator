@@ -17,7 +17,9 @@
       <nav class="navbar">
         <ul class="main-nav clean-list flex">
           <li class="nav-item"><a href="index.html">Gallery</a></li>
-          <li class="nav-item"><a href="memes.html">Memes</a></li>
+          <li class="nav-item">
+            <a href="#" onclick="showMemesGallery()">Memes</a>
+          </li>
           <li class="nav-item"><a href="about.html">About</a></li>
         </ul>
       </nav>
@@ -95,8 +97,8 @@
                 onchange="onChangeTxt(this.value, this.id)"
               />
             </div>
-            <div class="btn-group">
-              <button class="btn-line" onclick="onChangeLine()">
+            <div class="btns-lines">
+              <button class="btn-pick" onclick="onChangeLine()">
                 <i class="fa-solid fa-up-down"></i>
               </button>
               <button class="btn-add" onclick="onAddLine()">
@@ -174,14 +176,34 @@
               </div>
             </div>
             <div class="emoji-wrapper flex align-center justify-center">
-              <i class="fa-solid fa-caret-left" style="font-size: 25px"></i>
-              <span onclick="onAddEmoji('😂')">😂</span>
-              <span onclick="onAddEmoji('🤪')">🤪</span>
-              <span onclick="onAddEmoji('🤭')">🤭</span>
-              <span onclick="onAddEmoji('💩')" class="mobile-none">💩</span>
-              <i class="fa-solid fa-caret-right" style="font-size: 25px"></i>
+              <div onclick="onLeftPage()" class="to-left-page">
+                <i class="fa-solid fa-caret-left" style="font-size: 25px"></i>
+              </div>
+              <span onclick="onAddEmoji('😂')" class="center-page">😂</span>
+              <span onclick="onAddEmoji('🤪')" class="center-page">🤪</span>
+              <span onclick="onAddEmoji('🤭')" class="center-page">🤭</span>
+              <span onclick="onAddEmoji('💪')" class="mobile-none center-page"
+                >💪</span
+              >
+              <span onclick="onAddEmoji('😎')" class="left-page hidden"
+                >😎</span
+              >
+              <span onclick="onAddEmoji('🤩')" class="left-page hidden"
+                >🤩</span
+              >
+              <span onclick="onAddEmoji('😝')" class="left-page hidden"
+                >😝</span
+              >
+              <span
+                onclick="onAddEmoji('🤣')"
+                class="left-page hidden mobile-none"
+                >🤣</span
+              >
+              <div onclick="onRightPage()" class="to-right-page hidden">
+                <i class="fa-solid fa-caret-right" style="font-size: 25px"></i>
+              </div>
             </div>
-            <div class="meme-btns-wrapper">
+            <div class="btns-primarys">
               <button class="btn-share flex align-center justify-center">
                 <i class="fa-solid fa-share-nodes add-space-right"></i>
                 Share
@@ -200,6 +222,10 @@
             </div>
           </section>
         </div>
+      </container>
+
+      <container class="memes-container hidden">
+        <gallery class="memes-gallery grid-container"> </gallery>
       </container>
     </main>
 

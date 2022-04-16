@@ -7,3 +7,16 @@
 @import 'basic/layout.css';
 @import 'basic/helpers.css';
 @import 'basic/mq.css';
+
+/* Components */
+@import 'components/navbar.css';
+@import 'components/searchbar.css';
+@import 'components/gallery.css';
+@import 'components/editor.css';
+@import 'components/input-wrapper.css';
+@import 'components/btns-lines.css';
+@import 'components/line-settings.css';
+@import 'components/font-selector.css';
+@import 'components/emoji-wrapper.css';
+@import 'components/btns-primarys.css';
+@import 'components/memes-gallery.css';

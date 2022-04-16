@@ -1,0 +1,46 @@
+.btns-primarys {
+ margin-top: 10px;
+ width: 25rem;
+ height: 5rem;
+ display: flex;
+ align-items: center;
+ justify-content: space-around;
+}
+
+.btns-primarys button {
+ border-left: none;
+ border-right: none;
+ cursor: pointer;
+ height: 80%;
+ width: 47%;
+ font-size: 20px;
+ border-radius: 15px;
+ color: white;
+ transition: 0.2s ease-in-out;
+}
+
+.btns-primarys i {
+ color: white;
+}
+
+.btn-share {
+ background-color:#1E7CD3;
+ border-top: 3px solid #53B1E7;
+ border-bottom: 3px solid #165C9C;
+}
+
+.btn-share:hover {
+ background-color:#165C9C;
+ border-top: 3px solid #1E7CD3;
+}
+
+.btn-save {
+ background-color:#8F44BB;
+ border-top: 3px solid #BF84DA;
+ border-bottom: 3px solid #632687;
+}
+
+.btn-save:hover {
+ background-color:#632687;
+ border-top: 3px solid #8F44BB;
+}

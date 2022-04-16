@@ -1,0 +1,31 @@
+.grid-container {
+ display: grid;
+ margin: 0 5rem;
+ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+ grid-gap: 20px;
+}
+
+.gallery-item {
+ height: 250px;
+}
+
+.btn-random {
+ width: 100%;
+ max-width: 250px;
+ height: 100%;
+ cursor: pointer;
+ background-color: #1E7CD3;
+ color: white;
+ font-size: 35px;
+ border: none;
+ border-radius: 10px;
+ box-shadow: #121212 0px 2px 4px;
+}
+
+.gallery-item img {
+ border-radius: 10px;
+ max-height: 250px;
+ max-width: 250px;
+ cursor: pointer;
+ box-shadow: #121212 0px 2px 4px;
+}
