@@ -5,6 +5,9 @@ var gCtx
 var gCurrectLineId = 0
 var isFirstRender = true
 var isRandomText = false
+var isLineChange = false
+var gStartPos
+var gLineCenter
 
 var gFontSizeFunny = 20
 var gPaddingFunny = 20
@@ -23,7 +26,51 @@ function onInit() {
   gElCanvas = document.querySelector('#my-canvas')
   gCtx = gElCanvas.getContext('2d')
 
+  addListeners()
   renderGallery()
+}
+
+function addListeners() {
+  addMouseListeners()
+  addTouchListeners()
+}
+
+function addMouseListeners() {
+  gElCanvas.addEventListener('mousemove', onMove)
+  gElCanvas.addEventListener('mousedown', onDown)
+  gElCanvas.addEventListener('mouseup', onUp)
+}
+
+function addTouchListeners() {
+  gElCanvas.addEventListener('touchmove', onMove)
+  gElCanvas.addEventListener('touchstart', onDown)
+  gElCanvas.addEventListener('touchend', onUp)
+}
+
+function onDown(ev) {
+  const pos = getEvPos(ev)
+  console.log(getEvPos(ev))
+  if (isLineClicked(pos) === false) return
+  setLineDrag(true)
+  gStartPos = pos
+  document.body.style.cursor = 'grabbing'
+}
+
+function onMove(ev) {
+  const line = getLine()
+  if (!line) return
+  if (line.isDrag === false) return
+  const pos = getEvPos(ev)
+  const dx = pos.x - gStartPos.x
+  const dy = pos.y - gStartPos.y
+  moveLine(line, dx, dy)
+  gStartPos = pos
+  renderMeme()
+}
+
+function onUp(ev) {
+  setLineDrag(false)
+  document.body.style.cursor = 'auto'
 }
 
 function renderGallery() {
@@ -71,15 +118,15 @@ function renderImg(img) {
 }
 
 function renderMeme() {
-  const Idx = gMeme.selectedImgId
-  const img = getImg(Idx)
+  const idx = gMeme.selectedImgId
+  const img = getImg(idx)
   loadImage(img, renderImg)
   if (isFirstRender) {
     if (isRandomText) {
       var oneOrTwo = getRandomNum(1, 2)
       if (oneOrTwo === 2) {
         console.log(oneOrTwo)
-        const line = createRandomLine(Idx)
+        const line = createRandomLine()
         setTimeout(
           drawText,
           5,
@@ -91,10 +138,10 @@ function renderMeme() {
           line.pos.y
         )
       }
-      const line = createRandomLine(Idx)
+      const line = createRandomLine()
       setTimeout(
         drawText,
-        5,
+        1,
         line.txt,
         line.color,
         line.outline,
@@ -102,8 +149,9 @@ function renderMeme() {
         line.pos.x,
         line.pos.y
       )
+      renderSelectBox()
     } else {
-      const line = createFirstLine(Idx)
+      const line = createFirstLine()
       setTimeout(
         drawText,
         5,
@@ -112,18 +160,36 @@ function renderMeme() {
         line.outline,
         line.size,
         line.pos.x,
-        line.pos.y
+        line.pos.y,
+        line.font
       )
-      // const memeTxt = getText(Idx)
-      // setTimeout(renderTxt, 5, memeTxt)
+      renderSelectBox()
     }
     isFirstRender = false
-    renderInput(Idx)
+    renderInput()
   } else {
-    const memeTxt = getText(Idx)
-    setTimeout(renderTxt, 5, memeTxt)
-    renderInput(Idx)
+    if (gMeme.lines.length === 0) {
+      renderInput()
+    } else {
+      setTimeout(renderTxt, 5, gMeme.lines)
+      renderInput()
+      renderSelectBox()
+    }
   }
+}
+
+function renderSelectBox() {
+  const idx = gMeme.selectedLineIdx
+  const line = gMeme.lines[idx]
+  setTimeout(
+    drawRect,
+    5,
+    line.txt,
+    line.size,
+    line.pos.x,
+    line.pos.y,
+    line.font
+  )
 }
 
 function renderTxt(txtArr) {
@@ -134,45 +200,46 @@ function renderTxt(txtArr) {
     const size = str.size
     const posX = str.pos.x
     const posY = str.pos.y
-    drawText(text, color, outline, size, posX, posY)
+    const font = str.font
+    drawText(text, color, outline, size, posX, posY, font)
   })
 }
 
-function drawText(txt, fill, stroke, font, x, y) {
-  gCtx.font = `${font}px serif`
+function drawText(txt, fill, stroke, size, x, y, font) {
+  gCtx.font = `${size}px ${font}`
   gCtx.fillStyle = fill
   gCtx.strokeStyle = stroke
-  gCtx.lineWidth = 0.2
+  gCtx.lineWidth = 0.5
+  gCtx.textAlign = 'left'
+  gCtx.textBaseline = 'top'
   gCtx.fillText(txt, x, y)
   gCtx.strokeText(txt, x, y)
 }
 
-function renderInput(val) {
-  const idx = val.toString()
+function renderInput() {
   const elInputTxt = document.querySelector('.input-txt')
-  const line = gMeme.lines.find((line) => line.img === idx)
-  if (!line) {
+  if (gMeme.lines.length === 0) {
     elInputTxt.setAttribute('placeholder', 'Please add new line')
   } else {
+    const idx = gMeme.selectedLineIdx
+    const line = gMeme.lines[idx]
     elInputTxt.setAttribute('placeholder', `${line.txt}`)
-    elInputTxt.setAttribute('id', `${line.id}`)
+    elInputTxt.innerText = line.txt
+    elInputTxt.value = ''
   }
-  elInputTxt.value = ''
 }
 
-function onChangeTxt(val, id) {
-  setLineTxt(val, id)
+function onChangeTxt(val) {
+  setLineTxt(val)
   renderMeme()
 }
 
 function onChangeLine() {
-  if (gMeme.selectedLineIdx === gMeme.lines.length) {
-    gMeme.selectedLineIdx = 0
-  }
-  var res = changeLine()
-  const elInputTxt = document.querySelector('.input-txt')
-  elInputTxt.setAttribute('placeholder', `${res.txt}`)
-  elInputTxt.value = ''
+  changeLine()
+  // const elInputTxt = document.querySelector('.input-txt')
+  // elInputTxt.setAttribute('placeholder', res.txt)
+  // elInputTxt.setAttribute('id', res.id)
+  // isLineChange = true
   renderMeme()
 }
 
@@ -182,8 +249,7 @@ function onAddLine() {
 }
 
 function onDeleteLine() {
-  const elInputTxt = document.querySelector('.input-txt')
-  const idx = elInputTxt.id
+  const idx = gMeme.selectedLineIdx
   deleteLine(idx)
   renderMeme()
 }
@@ -204,7 +270,21 @@ function onChangeStroke(val) {
 }
 
 function onFillterCategory(elSpan) {
-  switch (elSpan.innerText) {
+  const str = elSpan.innerText
+  const filterImages = gImgs.filter((img) => img.keywords.includes(str))
+  var strHtmls = filterImages.map(
+    (img) =>
+      `<div class="gallery-item">
+        <img
+          src=${img.url}
+          id=${img.id}
+          alt=${img.keywords}
+          onclick="onClickImg(this.id)"
+        />
+      </div>`
+  )
+  document.querySelector('.gallery').innerHTML = strHtmls.join('')
+  switch (str) {
     case 'Funny':
       if (gFontSizeFunny === 30) {
         return
@@ -281,8 +361,73 @@ function onCreateRandom() {
   onClickImg(idx)
 }
 
-function onSaveMeme() {
-  const img = gMeme.selectedImgId
-  const txt = getText(img)
-  console.log(txt)
+// function onSaveMeme() {
+// var newCanvas = document.querySelector('#my-canvas')
+// var dataURL = newCanvas.toDataURL()
+// saveCanvas(dataURL)
+// saveMeme()
+// }
+
+function onSetFilter(val) {
+  const str = capitalizeFirstLetter(val)
+  const filterImages = gImgs.filter((img) => img.keywords.includes(str))
+  var strHtmls = filterImages.map(
+    (img) =>
+      `<div class="gallery-item">
+        <img
+          src=${img.url}
+          id=${img.id}
+          alt=${img.keywords}
+          onclick="onClickImg(this.id)"
+        />
+      </div>`
+  )
+  document.querySelector('.gallery').innerHTML = strHtmls.join('')
+}
+
+function onAddEmoji(val) {
+  const posX = getRandomNum(30, 450)
+  const posY = getRandomNum(30, 450)
+  addEmojiLine(val, posX, posY)
+  drawEmoji(val, posX, posY)
+}
+
+function drawEmoji(val, x, y) {
+  drawText(val, 'black', 'black', 50, x, y)
+  renderMeme()
+}
+
+function getEvPos(ev) {
+  var pos = {
+    x: ev.offsetX,
+    y: ev.offsetY,
+  }
+  // if (gTouchEvs.includes(ev.type)) {
+  //   ev.preventDefault()
+  //   ev = ev.changedTouches[0]
+  //   pos = {
+  //     x: ev.pageX - ev.target.offsetLeft,
+  //     y: ev.pageY - ev.target.offsetTop,
+  //   }
+  // }
+  return pos
+}
+
+function drawRect(txt, size, x, y, font) {
+  gCtx.beginPath()
+  gCtx.font = `${size}px ${font}`
+  gCtx.strokeStyle = 'gray'
+  gCtx.lineWidth = 2
+  gCtx.textAlign = 'left'
+  gCtx.textBaseline = 'top'
+  gCtx.setLineDash([6])
+  var textWidth = gCtx.measureText(txt).width
+  var lineHeight = size
+  gCtx.strokeRect(x, y, textWidth, lineHeight)
+  gLineCenter = {
+    x: (x * 2 + textWidth) / 2,
+    y: (y * 2 + lineHeight) / 2,
+    sizeX: textWidth / 2,
+    sizeY: lineHeight / 2,
+  }
 }

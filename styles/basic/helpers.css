@@ -265,10 +265,14 @@
  border-radius: 45px;
 }
 
+.emoji-wrapper > * {
+ cursor: pointer;
+}
+
 .emoji-wrapper span {
  font-size: 50px;
- padding: 0 10px;
- padding-bottom: 5px;
+ margin: 0 10px;
+ margin-bottom: 5px;
 }
 
 .meme-btns-wrapper {

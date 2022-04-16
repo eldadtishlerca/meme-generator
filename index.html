@@ -27,7 +27,12 @@
       <container class="gallery-container show">
         <section class="search-bar flex">
           <div class="search-wrapper">
-            <input class="search-input" type="search" placeholder="search" />
+            <input
+              class="search-input"
+              type="search"
+              placeholder="search"
+              onchange="onSetFilter(this.value)"
+            />
           </div>
           <div class="categories-wrapper flex align-center">
             <span onclick="onFillterCategory(this)" class="category-item">
@@ -170,10 +175,10 @@
             </div>
             <div class="emoji-wrapper flex align-center justify-center">
               <i class="fa-solid fa-caret-left" style="font-size: 25px"></i>
-              <span>🤪</span>
-              <span>🤓</span>
-              <span>🥱</span>
-              <span class="mobile-none">🐶</span>
+              <span onclick="onAddEmoji('😂')">😂</span>
+              <span onclick="onAddEmoji('🤪')">🤪</span>
+              <span onclick="onAddEmoji('🤭')">🤭</span>
+              <span onclick="onAddEmoji('💩')" class="mobile-none">💩</span>
               <i class="fa-solid fa-caret-right" style="font-size: 25px"></i>
             </div>
             <div class="meme-btns-wrapper">
@@ -197,7 +202,11 @@
         </div>
       </container>
     </main>
-    <!-- <script src="script/storage-services.js"></script> -->
+
+    <div>
+      <span class="checkSpan"></span>
+    </div>
+    <script src="script/storage-services.js"></script>
     <script src="script/util-services.js"></script>
     <script src="script/main-services.js"></script>
     <script src="script/main-controller.js"></script>

@@ -1,3 +1,5 @@
+'use strict'
+
 function makeId(length = 10) {
   const possible =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -32,4 +34,11 @@ function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)]
   }
   return color
+}
+
+function capitalizeFirstLetter(string) {
+  let firstLetter = string.charAt(0).toUpperCase()
+  let otherLetters = string.substring(1)
+  otherLetters = otherLetters.toLowerCase()
+  return firstLetter + otherLetters
 }
